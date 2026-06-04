@@ -1,0 +1,47 @@
+replicaCount: 1
+
+image:
+  repository: datapactacr.azurecr.io/legal
+  tag: "v1.1.1"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: acr-credentials
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8001
+
+ingress:
+  enabled: false
+  className: traefik
+  host: legalai.dp.assistcloud.net
+  tls: false
+  annotations: {}
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+  limits:
+    memory: "2Gi"
+    cpu: "1000m"
+
+env:
+  KEYCLOAK_ISSUER: "https://auth.dp.assistcloud.net/realms/datapact-ui-toolkit"
+  KEYCLOAK_CLIENT_ID: "legal-ai"
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: 8001
+  initialDelaySeconds: 60
+  periodSeconds: 30
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: 8001
+  initialDelaySeconds: 30
+  periodSeconds: 10

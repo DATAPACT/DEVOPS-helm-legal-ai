@@ -1,0 +1,6 @@
+apiVersion: v2
+name: legal-ai
+description: Helm chart for the Legal AI service
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

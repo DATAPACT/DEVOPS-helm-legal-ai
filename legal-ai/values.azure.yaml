@@ -1,0 +1,19 @@
+image:
+  repository: datapactacr.azurecr.io/legal
+  tag: "v1.1.1"
+  pullPolicy: IfNotPresent
+
+ingress:
+  enabled: true
+  className: traefik
+  host: legalai.dp.assistcloud.net
+  tls: true
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+
+replicaCount: 1
+
+env:
+  KEYCLOAK_ISSUER: "https://auth.dp.assistcloud.net/realms/datapact-ui-toolkit"
+  KEYCLOAK_CLIENT_ID: "legal-ai"
