@@ -1,7 +1,12 @@
+fullnameOverride: legal-ai
+
 image:
   repository: datapactacr.azurecr.io/legal
   tag: "v1.1.1"
   pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: acr-credentials
 
 ingress:
   enabled: true
@@ -13,6 +18,25 @@ ingress:
     traefik.ingress.kubernetes.io/router.tls: "true"
 
 replicaCount: 1
+
+service:
+  port: 8001
+  targetPort: 8001
+  type: ClusterIP
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: 8001
+  initialDelaySeconds: 60
+  periodSeconds: 30
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: 8001
+  initialDelaySeconds: 60
+  periodSeconds: 30
 
 env:
   KEYCLOAK_ISSUER: "https://auth.dp.assistcloud.net/realms/datapact-ui-toolkit"
