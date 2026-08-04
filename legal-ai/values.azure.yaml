@@ -2,7 +2,7 @@ fullnameOverride: legal-ai
 
 image:
   repository: datapactacr.azurecr.io/legal
-  tag: "v1.1.1"
+  tag: "v1.1.2"
   pullPolicy: IfNotPresent
 
 imagePullSecrets:
@@ -42,3 +42,7 @@ readinessProbe:
 env:
   KEYCLOAK_ISSUER: "https://auth.dp.assistcloud.net/realms/datapact-ui-toolkit"
   KEYCLOAK_CLIENT_ID: "legal-ai"
+
+openai:
+  existingSecret: legal-ai-openai
+  secretKey: OPENAI_API_KEY
